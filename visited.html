@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visited — Nosterra</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/jsvectormap.min.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="back-link" href="index.html">← Nosterra</a>
+    </div>
+  </header>
+
+  <section class="project-hero">
+    <div class="wrap">
+      <span class="monogram">V</span>
+      <h1>Le monde, coché pays par pays.</h1>
+      <p>Clique sur un pays pour l'ajouter à la liste de ceux que tu as visités.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="map-card">
+      <div id="world-map" class="world-map"></div>
+    </div>
+    <p class="map-note">Sauvegardé automatiquement dans ce navigateur (pas encore de compte, donc pas de synchronisation entre appareils pour l'instant).</p>
+
+    <div class="visited-headline">
+      <p class="progress-amount" id="visited-count">0<span>/ 0 pays</span></p>
+      <div class="progress-track">
+        <div class="progress-fill" id="visited-fill"></div>
+      </div>
+      <p class="progress-meta" id="visited-remaining" style="display:block;">—</p>
+    </div>
+
+    <div class="continent-grid" id="continent-grid"></div>
+
+    <div class="chip-list-wrap">
+      <h3 class="section-label">Pays visités</h3>
+      <div class="chip-list" id="chip-list">
+        <p class="empty-state" id="chip-empty">Clique sur un pays sur la carte pour commencer.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Nosterra — Visited · carte : jsVectorMap
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+  <script>
+    // ------------------------------------------------------------
+    // Base de données pays -> [nom en français, continent]
+    // ------------------------------------------------------------
+    var COUNTRY_DATA = {
+      AD: ["Andorre", "Europe"], AE: ["Émirats arabes unis", "Asie"], AF: ["Afghanistan", "Asie"],
+      AG: ["Antigua-et-Barbuda", "Amérique du Nord"], AI: ["Anguilla", "Amérique du Nord"],
+      AL: ["Albanie", "Europe"], AM: ["Arménie", "Asie"], AO: ["Angola", "Afrique"],
+      AR: ["Argentine", "Amérique du Sud"], AT: ["Autriche", "Europe"], AU: ["Australie", "Océanie"],
+      AZ: ["Azerbaïdjan", "Asie"],
+      BA: ["Bosnie-Herzégovine", "Europe"], BB: ["Barbade", "Amérique du Nord"], BD: ["Bangladesh", "Asie"],
+      BE: ["Belgique", "Europe"], BF: ["Burkina Faso", "Afrique"], BG: ["Bulgarie", "Europe"],
+      BH: ["Bahreïn", "Asie"], BI: ["Burundi", "Afrique"], BJ: ["Bénin", "Afrique"],
+      BN: ["Brunei", "Asie"], BO: ["Bolivie", "Amérique du Sud"], BR: ["Brésil", "Amérique du Sud"],
+      BS: ["Bahamas", "Amérique du Nord"], BT: ["Bhoutan", "Asie"], BW: ["Botswana", "Afrique"],
+      BY: ["Biélorussie", "Europe"], BZ: ["Belize", "Amérique du Nord"],
+      CA: ["Canada", "Amérique du Nord"], CD: ["RD Congo", "Afrique"], CF: ["République centrafricaine", "Afrique"],
+      CG: ["Congo", "Afrique"], CH: ["Suisse", "Europe"], CI: ["Côte d'Ivoire", "Afrique"],
+      CL: ["Chili", "Amérique du Sud"], CM: ["Cameroun", "Afrique"], CN: ["Chine", "Asie"],
+      CO: ["Colombie", "Amérique du Sud"], CR: ["Costa Rica", "Amérique du Nord"], CU: ["Cuba", "Amérique du Nord"],
+      CV: ["Cap-Vert", "Afrique"], CY: ["Chypre", "Asie"], CZ: ["Tchéquie", "Europe"],
+      DE: ["Allemagne", "Europe"], DJ: ["Djibouti", "Afrique"], DK: ["Danemark", "Europe"],
+      DM: ["Dominique", "Amérique du Nord"], DO: ["République dominicaine", "Amérique du Nord"], DZ: ["Algérie", "Afrique"],
+      EC: ["Équateur", "Amérique du Sud"], EE: ["Estonie", "Europe"], EG: ["Égypte", "Afrique"],
+      EH: ["Sahara occidental", "Afrique"], ER: ["Érythrée", "Afrique"], ES: ["Espagne", "Europe"], ET: ["Éthiopie", "Afrique"],
+      FI: ["Finlande", "Europe"], FJ: ["Fidji", "Océanie"], FM: ["Micronésie", "Océanie"], FR: ["France", "Europe"],
+      GA: ["Gabon", "Afrique"], GB: ["Royaume-Uni", "Europe"], GD: ["Grenade", "Amérique du Nord"],
+      GE: ["Géorgie", "Asie"], GH: ["Ghana", "Afrique"], GL: ["Groenland", "Amérique du Nord"],
+      GM: ["Gambie", "Afrique"], GN: ["Guinée", "Afrique"], GQ: ["Guinée équatoriale", "Afrique"],
+      GR: ["Grèce", "Europe"], GT: ["Guatemala", "Amérique du Nord"], GU: ["Guam", "Océanie"],
+      GW: ["Guinée-Bissau", "Afrique"], GY: ["Guyana", "Amérique du Sud"],
+      HK: ["Hong Kong", "Asie"], HN: ["Honduras", "Amérique du Nord"], HR: ["Croatie", "Europe"],
+      HT: ["Haïti", "Amérique du Nord"], HU: ["Hongrie", "Europe"],
+      ID: ["Indonésie", "Asie"], IE: ["Irlande", "Europe"], IL: ["Israël", "Asie"], IN: ["Inde", "Asie"],
+      IQ: ["Irak", "Asie"], IR: ["Iran", "Asie"], IS: ["Islande", "Europe"], IT: ["Italie", "Europe"],
+      JM: ["Jamaïque", "Amérique du Nord"], JO: ["Jordanie", "Asie"], JP: ["Japon", "Asie"],
+      KE: ["Kenya", "Afrique"], KG: ["Kirghizistan", "Asie"], KH: ["Cambodge", "Asie"], KI: ["Kiribati", "Océanie"],
+      KM: ["Comores", "Afrique"], KN: ["Saint-Christophe-et-Niévès", "Amérique du Nord"], KP: ["Corée du Nord", "Asie"],
+      KR: ["Corée du Sud", "Asie"], KW: ["Koweït", "Asie"], KZ: ["Kazakhstan", "Asie"],
+      LA: ["Laos", "Asie"], LB: ["Liban", "Asie"], LC: ["Sainte-Lucie", "Amérique du Nord"],
+      LI: ["Liechtenstein", "Europe"], LK: ["Sri Lanka", "Asie"], LR: ["Libéria", "Afrique"],
+      LS: ["Lesotho", "Afrique"], LT: ["Lituanie", "Europe"], LU: ["Luxembourg", "Europe"],
+      LV: ["Lettonie", "Europe"], LY: ["Libye", "Afrique"],
+      MA: ["Maroc", "Afrique"], MC: ["Monaco", "Europe"], MD: ["Moldavie", "Europe"], ME: ["Monténégro", "Europe"],
+      MG: ["Madagascar", "Afrique"], MH: ["Îles Marshall", "Océanie"], MK: ["Macédoine du Nord", "Europe"],
+      ML: ["Mali", "Afrique"], MM: ["Birmanie", "Asie"], MN: ["Mongolie", "Asie"], MO: ["Macao", "Asie"],
+      MR: ["Mauritanie", "Afrique"], MT: ["Malte", "Europe"], MU: ["Maurice", "Afrique"], MV: ["Maldives", "Asie"],
+      MW: ["Malawi", "Afrique"], MX: ["Mexique", "Amérique du Nord"], MY: ["Malaisie", "Asie"], MZ: ["Mozambique", "Afrique"],
+      NA: ["Namibie", "Afrique"], NC: ["Nouvelle-Calédonie", "Océanie"], NE: ["Niger", "Afrique"],
+      NG: ["Nigeria", "Afrique"], NI: ["Nicaragua", "Amérique du Nord"], NL: ["Pays-Bas", "Europe"],
+      NO: ["Norvège", "Europe"], NP: ["Népal", "Asie"], NR: ["Nauru", "Océanie"], NZ: ["Nouvelle-Zélande", "Océanie"],
+      OM: ["Oman", "Asie"],
+      PA: ["Panama", "Amérique du Nord"], PE: ["Pérou", "Amérique du Sud"], PF: ["Polynésie française", "Océanie"],
+      PG: ["Papouasie-Nouvelle-Guinée", "Océanie"], PH: ["Philippines", "Asie"], PK: ["Pakistan", "Asie"],
+      PL: ["Pologne", "Europe"], PR: ["Porto Rico", "Amérique du Nord"], PS: ["Palestine", "Asie"],
+      PT: ["Portugal", "Europe"], PW: ["Palaos", "Océanie"], PY: ["Paraguay", "Amérique du Sud"],
+      QA: ["Qatar", "Asie"],
+      RO: ["Roumanie", "Europe"], RS: ["Serbie", "Europe"], RU: ["Russie", "Europe"], RW: ["Rwanda", "Afrique"],
+      SA: ["Arabie saoudite", "Asie"], SB: ["Îles Salomon", "Océanie"], SC: ["Seychelles", "Afrique"],
+      SD: ["Soudan", "Afrique"], SE: ["Suède", "Europe"], SG: ["Singapour", "Asie"], SI: ["Slovénie", "Europe"],
+      SK: ["Slovaquie", "Europe"], SL: ["Sierra Leone", "Afrique"], SM: ["Saint-Marin", "Europe"],
+      SN: ["Sénégal", "Afrique"], SO: ["Somalie", "Afrique"], SR: ["Suriname", "Amérique du Sud"],
+      SS: ["Soudan du Sud", "Afrique"], ST: ["Sao Tomé-et-Principe", "Afrique"], SV: ["Salvador", "Amérique du Nord"],
+      SY: ["Syrie", "Asie"], SZ: ["Eswatini", "Afrique"],
+      TD: ["Tchad", "Afrique"], TG: ["Togo", "Afrique"], TH: ["Thaïlande", "Asie"], TJ: ["Tadjikistan", "Asie"],
+      TL: ["Timor oriental", "Asie"], TM: ["Turkménistan", "Asie"], TN: ["Tunisie", "Afrique"],
+      TO: ["Tonga", "Océanie"], TR: ["Turquie", "Asie"], TT: ["Trinité-et-Tobago", "Amérique du Nord"],
+      TV: ["Tuvalu", "Océanie"], TW: ["Taïwan", "Asie"], TZ: ["Tanzanie", "Afrique"],
+      UA: ["Ukraine", "Europe"], UG: ["Ouganda", "Afrique"], US: ["États-Unis", "Amérique du Nord"],
+      UY: ["Uruguay", "Amérique du Sud"], UZ: ["Ouzbékistan", "Asie"],
+      VA: ["Vatican", "Europe"], VC: ["Saint-Vincent-et-les-Grenadines", "Amérique du Nord"],
+      VE: ["Venezuela", "Amérique du Sud"], VN: ["Viêt Nam", "Asie"], VU: ["Vanuatu", "Océanie"],
+      WS: ["Samoa", "Océanie"],
+      XK: ["Kosovo", "Europe"],
+      YE: ["Yémen", "Asie"],
+      ZA: ["Afrique du Sud", "Afrique"], ZM: ["Zambie", "Afrique"], ZW: ["Zimbabwe", "Afrique"]
+    };
+
+    var CONTINENTS = ["Afrique", "Amérique du Nord", "Amérique du Sud", "Asie", "Europe", "Océanie"];
+    var TOTAL_COUNTRIES = Object.keys(COUNTRY_DATA).length;
+    var STORAGE_KEY = "nosterra_visited_countries";
+
+    function loadVisited() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveVisited(codes) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(codes));
+      } catch (e) {
+        // stockage indisponible (navigation privée, etc.) : on continue sans sauvegarder
+      }
+    }
+
+    function pulse(el) {
+      el.classList.remove("pulse");
+      void el.offsetWidth;
+      el.classList.add("pulse");
+    }
+
+    var renderedCodes = {};
+
+    function renderStats(codesRaw) {
+      var codes = (codesRaw || []).filter(function (c) { return !!c; });
+
+      // -- Total et barre de progression --
+      var countEl = document.getElementById("visited-count");
+      countEl.innerHTML = codes.length + '<span>/ ' + TOTAL_COUNTRIES + " pays</span>";
+      pulse(countEl);
+
+      var pct = TOTAL_COUNTRIES ? Math.round((codes.length / TOTAL_COUNTRIES) * 100) : 0;
+      document.getElementById("visited-fill").style.width = pct + "%";
+
+      // -- Continents --
+      var byContinent = {};
+      CONTINENTS.forEach(function (c) { byContinent[c] = { visited: 0, total: 0 }; });
+      Object.keys(COUNTRY_DATA).forEach(function (code) {
+        var continent = COUNTRY_DATA[code][1];
+        if (byContinent[continent]) byContinent[continent].total++;
+      });
+      codes.forEach(function (code) {
+        var info = COUNTRY_DATA[code];
+        if (info && byContinent[info[1]]) byContinent[info[1]].visited++;
+      });
+
+      var continentsVisitedCount = CONTINENTS.filter(function (c) {
+        return byContinent[c].visited > 0;
+      }).length;
+
+      var remaining = TOTAL_COUNTRIES - codes.length;
+      document.getElementById("visited-remaining").textContent =
+        (remaining > 0 ? "reste " + remaining + " pays à découvrir" : "tous les pays visités 🌍") +
+        " · " + continentsVisitedCount + " / 6 continents";
+
+      var grid = document.getElementById("continent-grid");
+      grid.innerHTML = CONTINENTS.map(function (c) {
+        var d = byContinent[c];
+        var p = d.total ? Math.round((d.visited / d.total) * 100) : 0;
+        return (
+          '<div class="continent-item">' +
+            '<div class="continent-name-row">' +
+              '<span class="continent-name">' + c + "</span>" +
+              '<span class="continent-count">' + d.visited + " / " + d.total + "</span>" +
+            "</div>" +
+            '<div class="continent-bar"><div class="continent-bar-fill" style="width:' + p + '%"></div></div>' +
+          "</div>"
+        );
+      }).join("");
+
+      // -- Liste des pays visités (chips, avec animation d'ajout/retrait) --
+      var chipList = document.getElementById("chip-list");
+      var emptyState = document.getElementById("chip-empty");
+      var newSet = {};
+      codes.forEach(function (code) { newSet[code] = true; });
+
+      Object.keys(renderedCodes).forEach(function (code) {
+        if (!newSet[code]) {
+          var el = chipList.querySelector('[data-code="' + code + '"]');
+          if (el) {
+            el.classList.add("chip-exit");
+            setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 200);
+          }
+        }
+      });
+
+      Object.keys(newSet).forEach(function (code) {
+        if (!renderedCodes[code]) {
+          var info = COUNTRY_DATA[code];
+          var name = info ? info[0] : code;
+          var chip = document.createElement("span");
+          chip.className = "chip";
+          chip.setAttribute("data-code", code);
+          chip.textContent = name;
+          chipList.appendChild(chip);
+        }
+      });
+
+      emptyState.style.display = codes.length > 0 ? "none" : "";
+
+      renderedCodes = newSet;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var initial = loadVisited();
+
+      var map = new jsVectorMap({
+        selector: "#world-map",
+        map: "world",
+        zoomButtons: true,
+        zoomOnScroll: false,
+        regionsSelectable: true,
+        selectedRegions: initial,
+        showTooltip: true,
+        regionStyle: {
+          initial: { fill: "#e2e2de", stroke: "#f6f6f3", "stroke-width": 0.6 },
+          hover: { fill: "#c7cdfa", cursor: "pointer" },
+          selected: { fill: "#3d4fe0" },
+          selectedHover: { fill: "#2f3fc9" }
+        },
+        onRegionTooltipShow: function (event, tooltip, code) {
+          var info = COUNTRY_DATA[code];
+          if (info) tooltip.text(info[0]);
+        },
+        onRegionSelected: function (code, isSelected, selectedRegions) {
+          saveVisited(selectedRegions);
+          renderStats(selectedRegions);
+        },
+        onLoaded: function (mapInstance) {
+          var current = (mapInstance && mapInstance.getSelectedRegions) ? mapInstance.getSelectedRegions() : initial;
+          renderStats(current);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
