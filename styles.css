@@ -275,3 +275,96 @@ body {
   font-size: 13.5px;
   color: var(--muted);
 }
+
+/* ---------- Fiches de rôle (Among Us : Concepts) ---------- */
+
+.roles {
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+}
+
+.role {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.role-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.role-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.role-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  margin: 0;
+}
+
+.role-camp {
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.role-intro {
+  color: var(--muted);
+  max-width: 60ch;
+  margin: 0 0 8px;
+}
+
+.role-section {
+  margin-top: 26px;
+}
+
+.role-section h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-section ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink);
+}
+
+.role-section li {
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.role-section li::marker {
+  color: var(--line);
+}
+
+.icon-legend {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.icon-legend li {
+  font-size: 14.5px;
+  display: flex;
+  gap: 8px;
+}
+
+.icon-legend .glyph {
+  flex-shrink: 0;
+}
