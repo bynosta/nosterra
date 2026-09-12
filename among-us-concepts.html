@@ -23,8 +23,94 @@
   </section>
 
   <section class="wrap">
-    <div class="coming-soon">
-      <p>Cette page est en chantier. Les concepts arriveront ici bientôt.</p>
+    <div class="roles">
+
+      <!-- ============ RÔLE : MESSAGER ============ -->
+      <article class="role">
+        <div class="role-header">
+          <span class="role-icon">🐦</span>
+          <h2 class="role-name">Messager</h2>
+          <span class="role-camp">Équipage</span>
+        </div>
+        <p class="role-intro">Le Messager peut envoyer un pigeon voyageur à un autre joueur afin de lui transmettre un message.</p>
+
+        <div class="role-section">
+          <h3>📨 Envoyer un message</h3>
+          <ul>
+            <li>Le Messager sélectionne un joueur et écrit son message.</li>
+            <li>Un pigeon voyageur apparaît et commence son trajet.</li>
+            <li>Il se déplace réellement dans les couloirs et ne peut pas traverser les murs.</li>
+            <li>Le joueur ciblé voit une petite icône d'oiseau verte se rapprocher de lui.</li>
+            <li>Il sait qu'un message arrive, mais ne sait pas précisément d'où vient le pigeon.</li>
+          </ul>
+        </div>
+
+        <div class="role-section">
+          <h3>🔴 Interception</h3>
+          <ul>
+            <li>Seul un Imposteur peut intercepter le pigeon.</li>
+            <li>Il peut l'intercepter pendant son trajet.</li>
+            <li>Le pigeon tombe alors au sol et reste visible par les joueurs.</li>
+            <li>Le Messager est immédiatement averti que son pigeon a été intercepté.</li>
+            <li>Le pigeon mort ne peut pas être reporté.</li>
+            <li>L'Imposteur n'a pas de pénalité supplémentaire : son cooldown de kill habituel s'applique normalement.</li>
+          </ul>
+        </div>
+
+        <div class="role-section">
+          <h3>📜 Réception du message</h3>
+          <p class="role-intro" style="margin-bottom:10px;">Lorsque le pigeon atteint sa destination :</p>
+          <ul>
+            <li>Le joueur reçoit une notification avec un petit parchemin ancien.</li>
+            <li>Il peut l'ouvrir immédiatement ou le conserver pour plus tard.</li>
+            <li>En cliquant dessus, le parchemin se déploie au centre de l'écran et affiche le message.</li>
+            <li>Le message reste consultable jusqu'à la fin de la partie.</li>
+          </ul>
+        </div>
+
+        <div class="role-section">
+          <h3>🖼️ Icône facultative</h3>
+          <p class="role-intro" style="margin-bottom:10px;">En bas du parchemin, le Messager peut ajouter une icône pour donner une indication rapide. Quelques exemples :</p>
+          <ul class="icon-legend">
+            <li><span class="glyph">🚨</span> Buzzer → « Va buzzer / Réunion urgente »</li>
+            <li><span class="glyph">🏃</span> Among Us qui court → « Fuis / Éloigne-toi »</li>
+            <li><span class="glyph">⚠️</span> Sabotage → « Un sabotage arrive / Prépare-toi »</li>
+            <li><span class="glyph">👀</span> Œil → « Quelqu'un te surveille »</li>
+            <li><span class="glyph">🩸</span> Tache rouge → « Attention, danger »</li>
+            <li><span class="glyph">📍</span> Repère → « Rendez-vous quelque part »</li>
+            <li><span class="glyph">🤫</span> Doigt sur la bouche → « Ne dis rien »</li>
+            <li><span class="glyph">❗</span> Point d'exclamation → « Information importante »</li>
+          </ul>
+          <p class="role-intro" style="margin-top:14px;">L'icône est totalement optionnelle : le Messager peut envoyer uniquement du texte.</p>
+        </div>
+
+        <div class="role-section">
+          <h3>⏱️ Cooldown</h3>
+          <ul>
+            <li>Le cooldown du Messager commence uniquement lorsque le pigeon arrive à destination.</li>
+            <li>Il utilise le temps défini dans les paramètres de la partie.</li>
+            <li>Exemple : avec un cooldown de 60 secondes, il peut envoyer un nouveau pigeon 60 secondes après la réception du précédent.</li>
+            <li>Si le pigeon est intercepté, le cooldown peut commencer au moment de l'interception, pour éviter que l'Imposteur puisse simplement empêcher le rôle de fonctionner pendant toute la partie.</li>
+          </ul>
+        </div>
+
+        <div class="role-section">
+          <h3>🧭 Choix de la cible</h3>
+          <ul>
+            <li>Le Messager peut voir les joueurs classés approximativement selon leur proximité.</li>
+            <li>Il ne voit ni leur position exacte, ni la distance en mètres.</li>
+            <li>Cela lui permet simplement de choisir quelqu'un de proche ou de loin selon la situation.</li>
+          </ul>
+        </div>
+      </article>
+      <!-- ============ FIN RÔLE : MESSAGER ============ -->
+
+      <!--
+        Pour ajouter un nouveau rôle plus tard :
+        copie tout le bloc <article class="role">...</article> ci-dessus,
+        colle-le juste après, et change le contenu.
+      -->
+
     </div>
   </section>
 
