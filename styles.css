@@ -276,6 +276,156 @@ body {
   color: var(--muted);
 }
 
+/* ---------- Aperçu 3D du PC (Road to PC) ---------- */
+
+.build-preview {
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+
+.build-preview a {
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.build-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.25s ease;
+}
+
+.build-preview a:hover img {
+  transform: scale(1.02);
+}
+
+.build-caption {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* ---------- Carte d'identité de rôle ---------- */
+
+.id-card {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 18px 0 28px;
+  background: #fff;
+}
+
+.id-card-avatar {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  flex-shrink: 0;
+}
+
+.id-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.id-card-row,
+.id-card-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.id-card-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.id-card-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.id-card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.id-card-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.id-card-xp {
+  width: 90px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  overflow: hidden;
+  margin-top: 3px;
+}
+
+.id-card-xp-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.id-card-toggle {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.id-card-toggle:hover {
+  background: var(--accent-soft);
+}
+
+.id-card-id-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .id-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .id-card-row,
+  .id-card-account {
+    flex-direction: column;
+    gap: 3px;
+  }
+  .id-card-stats {
+    justify-content: center;
+  }
+  .id-card-stats > div {
+    align-items: center;
+  }
+}
+
 /* ---------- Fiches de rôle (Among Us : Concepts) ---------- */
 
 .roles {
