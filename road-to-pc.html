@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road to PC — Nosterra</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="back-link" href="index.html">← Nosterra</a>
+    </div>
+  </header>
+
+  <section class="project-hero">
+    <div class="wrap">
+      <span class="monogram">R</span>
+      <h1>Road to PC</h1>
+      <p>Le compte à rebours de l'argent économisé avant de pouvoir m'acheter un PC.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="progress-figure">
+      <p class="progress-amount" id="amount-display">— <span>/ —</span></p>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <div class="progress-meta">
+        <span id="percent-display">—</span>
+        <span id="remaining-display">—</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Nosterra — Road to PC
+    </div>
+  </footer>
+
+  <script>
+    // ------------------------------------------------------------
+    // À modifier à chaque fois que tu économises de l'argent :
+    // change juste ces deux nombres, tout le reste se recalcule tout seul.
+    // ------------------------------------------------------------
+    const SAVED = 300;   // ce que tu as économisé pour l'instant (en €)
+    const GOAL = 1200;   // ton objectif total (en €)
+    // ------------------------------------------------------------
+
+    const percent = Math.min(100, Math.round((SAVED / GOAL) * 100));
+    const remaining = Math.max(0, GOAL - SAVED);
+
+    document.getElementById('amount-display').innerHTML =
+      SAVED.toLocaleString('fr-FR') + ' € <span>/ ' + GOAL.toLocaleString('fr-FR') + ' €</span>';
+    document.getElementById('percent-display').textContent = percent + '%';
+    document.getElementById('remaining-display').textContent =
+      remaining > 0 ? 'reste ' + remaining.toLocaleString('fr-FR') + ' €' : 'objectif atteint 🎉';
+
+    // Léger délai pour que l'animation de remplissage soit visible au chargement
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.getElementById('progress-fill').style.width = percent + '%';
+      }, 100);
+    });
+  </script>
+
+</body>
+</html>
