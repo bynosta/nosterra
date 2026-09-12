@@ -34,6 +34,44 @@
         </div>
         <p class="role-intro">Le Messager peut envoyer un pigeon voyageur à un autre joueur afin de lui transmettre un message.</p>
 
+        <div class="id-card">
+          <img class="id-card-avatar" src="assets/messager.jpg" alt="Illustration du personnage Messager, en orange, avec un oiseau messager">
+          <div class="id-card-info">
+            <div class="id-card-row">
+              <span class="id-card-label">Code ami</span>
+              <span class="id-card-value">MESSAGER#0060</span>
+            </div>
+            <div class="id-card-row">
+              <span class="id-card-label">Pseudo</span>
+              <span class="id-card-value">Messager</span>
+            </div>
+            <div class="id-card-stats">
+              <div>
+                <span class="id-card-label">Taille</span>
+                <span class="id-card-value">3'6"</span>
+              </div>
+              <div>
+                <span class="id-card-label">Poids</span>
+                <span class="id-card-value">88 lbs</span>
+              </div>
+            </div>
+            <div class="id-card-stats">
+              <div>
+                <span class="id-card-label">Niveau</span>
+                <span class="id-card-value">12</span>
+              </div>
+              <div>
+                <span class="id-card-label">XP</span>
+                <div class="id-card-xp"><div class="id-card-xp-fill" style="width: 74%;"></div></div>
+              </div>
+            </div>
+            <div class="id-card-account">
+              <span class="id-card-label">ID de compte</span>
+              <button class="id-card-toggle" onclick="toggleAccountId(this)">Afficher l'ID</button>
+            </div>
+          </div>
+        </div>
+
         <div class="role-section">
           <h3>📨 Envoyer un message</h3>
           <ul>
@@ -119,6 +157,18 @@
       Nosterra — Among Us : Concepts
     </div>
   </footer>
+
+  <script>
+    function toggleAccountId(button) {
+      if (button.dataset.shown === 'true') {
+        button.textContent = "Afficher l'ID";
+        button.dataset.shown = 'false';
+      } else {
+        button.textContent = 'MSG-0648-PIGEON';
+        button.dataset.shown = 'true';
+      }
+    }
+  </script>
 
 </body>
 </html>
