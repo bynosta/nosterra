@@ -6,7 +6,10 @@
 <title>Nosterra</title>
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-home">
+
+  <div class="stars stars-1"></div>
+  <div class="stars stars-2"></div>
 
   <header class="site-header">
     <div class="wrap">
@@ -14,60 +17,128 @@
     </div>
   </header>
 
-  <section class="hero">
+  <section class="home-hero">
     <div class="wrap">
-      <h1>Un territoire, plusieurs chantiers en cours.</h1>
-      <p>Ici je regroupe ce que je construis à côté : un objectif d'argent, des idées de jeu, une carte à remplir, et mes cartes Fortnite.</p>
+      <h1>Un territoire, plusieurs mondes en orbite.</h1>
+      <p>Clique sur une planète pour la découvrir.</p>
     </div>
   </section>
 
-  <nav class="wrap">
-    <div class="index">
+  <div class="solar-system" id="solar-system">
+    <div class="sun" aria-hidden="true"></div>
 
-      <a class="row" href="road-to-pc.html">
-        <span class="row-mark">R</span>
-        <span class="row-body">
-          <span class="row-title">Road to PC</span>
-          <p class="row-desc">Le compte à rebours de l'argent qu'il me manque pour m'acheter un PC.</p>
-        </span>
-        <span class="row-status is-live">300 € / 1200 €</span>
+    <div class="orbit" style="--size: clamp(140px, 26vmin, 260px); animation-duration: 14s;">
+      <a class="planet planet-pc" href="road-to-pc.html"
+         data-title="Road to PC"
+         data-desc="Le compte à rebours de l'argent économisé avant de m'acheter un PC."
+         data-stat="300 € / 1200 € économisés — 25%">
+        <span class="planet-dot" style="--c:#f5b942;"></span>
       </a>
-
-      <a class="row" href="among-us-concepts.html">
-        <span class="row-mark">A</span>
-        <span class="row-body">
-          <span class="row-title">Among Us : Concepts</span>
-          <p class="row-desc">Des idées de rôles, de maps et de mécaniques imaginées pour Among Us.</p>
-        </span>
-        <span class="row-status">Nouveau !</span>
-      </a>
-
-      <a class="row" href="visited.html">
-        <span class="row-mark">V</span>
-        <span class="row-body">
-          <span class="row-title">Visited</span>
-          <p class="row-desc">Une carte du monde à cliquer pays par pays, pour suivre ce qu'il me reste à visiter.</p>
-        </span>
-        <span class="row-status">Bientôt</span>
-      </a>
-
-      <a class="row" href="nosterra-by-pcm.html">
-        <span class="row-mark">N</span>
-        <span class="row-body">
-          <span class="row-title">Nosterra by PCM</span>
-          <p class="row-desc">Mes projets de maps Fortnite créatives.</p>
-        </span>
-        <span class="row-status">Bientôt</span>
-      </a>
-
     </div>
-  </nav>
+
+    <div class="orbit" style="--size: clamp(200px, 38vmin, 380px); animation-duration: 21s;">
+      <a class="planet planet-among" href="among-us-concepts.html"
+         data-title="Among Us : Concepts"
+         data-desc="Des idées de rôles, de maps et de mécaniques imaginées pour Among Us."
+         data-stat="1 rôle en ligne pour l'instant : le Messager 📩">
+        <span class="planet-dot" style="--c:#ff8a3d;"></span>
+      </a>
+    </div>
+
+    <div class="orbit" style="--size: clamp(260px, 50vmin, 500px); animation-duration: 28s;">
+      <a class="planet planet-visited" href="visited.html"
+         data-title="Visited"
+         data-desc="Une carte du monde à cocher pays par pays, avec le détail par continent."
+         data-stat="Clique pour commencer à explorer">
+        <span class="planet-dot" style="--c:#4fb0c6;"></span>
+      </a>
+    </div>
+
+    <div class="orbit" style="--size: clamp(320px, 62vmin, 620px); animation-duration: 36s;">
+      <a class="planet planet-pcm" href="nosterra-by-pcm.html"
+         data-title="Nosterra by PCM"
+         data-desc="Mes créations de maps Fortnite."
+         data-stat="Bientôt disponible">
+        <span class="planet-dot" style="--c:#9b7bff;"></span>
+      </a>
+    </div>
+  </div>
+
+  <p class="orbit-hint" id="orbit-hint">Clique sur une planète pour la découvrir.</p>
+
+  <div class="planet-panel" id="planet-panel" hidden>
+    <button class="panel-close" id="panel-close" aria-label="Fermer">×</button>
+    <h2 id="panel-title"></h2>
+    <p id="panel-desc"></p>
+    <p class="panel-stat" id="panel-stat"></p>
+    <a class="panel-enter" id="panel-enter" href="#">Entrer dans le projet →</a>
+  </div>
 
   <footer class="site-footer">
     <div class="wrap">
       Nosterra — mis à jour au fil des projets.
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var system = document.getElementById('solar-system');
+      var panel = document.getElementById('planet-panel');
+      var title = document.getElementById('panel-title');
+      var desc = document.getElementById('panel-desc');
+      var stat = document.getElementById('panel-stat');
+      var enter = document.getElementById('panel-enter');
+      var closeBtn = document.getElementById('panel-close');
+      var hint = document.getElementById('orbit-hint');
+      var planets = document.querySelectorAll('.planet');
+      var active = null;
+
+      function openPanel(planet) {
+        active = planet;
+        planets.forEach(function (p) {
+          p.classList.toggle('is-active', p === planet);
+        });
+        system.classList.add('has-active');
+        title.textContent = planet.getAttribute('data-title');
+        desc.textContent = planet.getAttribute('data-desc');
+        stat.textContent = planet.getAttribute('data-stat');
+        enter.setAttribute('href', planet.getAttribute('href'));
+        panel.hidden = false;
+        requestAnimationFrame(function () {
+          panel.classList.add('is-visible');
+        });
+        hint.style.opacity = '0';
+      }
+
+      function closePanel() {
+        active = null;
+        planets.forEach(function (p) { p.classList.remove('is-active'); });
+        system.classList.remove('has-active');
+        panel.classList.remove('is-visible');
+        hint.style.opacity = '';
+        setTimeout(function () {
+          if (!panel.classList.contains('is-visible')) panel.hidden = true;
+        }, 250);
+      }
+
+      planets.forEach(function (planet) {
+        planet.addEventListener('click', function (e) {
+          // Premier clic sur une planète différente : on zoome et affiche les détails.
+          // Un second clic sur la MÊME planète (déjà active) laisse le lien s'ouvrir normalement.
+          if (active === planet) {
+            return;
+          }
+          e.preventDefault();
+          openPanel(planet);
+        });
+      });
+
+      closeBtn.addEventListener('click', closePanel);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closePanel();
+      });
+    });
+  </script>
 
 </body>
 </html>
