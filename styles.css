@@ -609,6 +609,275 @@ body {
   margin: 0;
 }
 
+/* ============================================================
+   PAGE D'ACCUEIL — Système solaire (thème sombre, uniquement
+   quand <body class="page-home"> est présent)
+   ============================================================ */
+
+body.page-home {
+  background: #05060a;
+  color: #eceef5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body.page-home .wordmark {
+  color: #f5f6fa;
+}
+
+body.page-home .site-footer {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-image:
+    radial-gradient(1.4px 1.4px at 10% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 70%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 55% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 55%, #fff, transparent),
+    radial-gradient(1.6px 1.6px at 85% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 15% 85%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 45% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 92% 80%, #fff, transparent),
+    radial-gradient(1.4px 1.4px at 60% 90%, #fff, transparent),
+    radial-gradient(1px 1px at 25% 40%, #fff, transparent);
+  background-size: 340px 340px;
+  opacity: 0.55;
+  animation: stars-drift 120s linear infinite;
+}
+
+.stars-2 {
+  background-size: 500px 500px;
+  opacity: 0.3;
+  animation-duration: 200s;
+  animation-direction: reverse;
+}
+
+@keyframes stars-drift {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 500px; }
+}
+
+.home-hero {
+  text-align: center;
+  padding: 56px 0 8px;
+}
+
+.home-hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: clamp(26px, 4.5vw, 38px);
+  margin: 0 0 10px;
+  color: #f5f6fa;
+}
+
+.home-hero p {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 15px;
+  margin: 0;
+}
+
+.solar-system {
+  position: relative;
+  width: 100%;
+  height: 62vh;
+  min-height: 380px;
+  max-height: 640px;
+  margin: 24px 0 4px;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff8e6, #ffd27a 55%, #d98f2b 100%);
+  box-shadow: 0 0 36px 8px rgba(255, 190, 90, 0.35), 0 0 80px 26px rgba(255, 190, 90, 0.12);
+  animation: sun-pulse 4s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { box-shadow: 0 0 36px 8px rgba(255, 190, 90, 0.35), 0 0 80px 26px rgba(255, 190, 90, 0.12); }
+  50% { box-shadow: 0 0 44px 12px rgba(255, 190, 90, 0.5), 0 0 100px 34px rgba(255, 190, 90, 0.18); }
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  animation-name: orbit-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.solar-system:hover .orbit,
+.solar-system.has-active .orbit {
+  animation-play-state: paused;
+}
+
+.planet {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
+  width: 20px;
+  height: 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.planet-dot {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 10px 2px var(--c);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+.planet:hover .planet-dot,
+.planet:focus-visible .planet-dot {
+  transform: scale(1.35);
+}
+
+.planet.is-active .planet-dot {
+  transform: scale(2.6);
+  box-shadow: 0 0 28px 9px var(--c);
+}
+
+.solar-system.has-active .planet:not(.is-active) .planet-dot {
+  opacity: 0.25;
+}
+
+.planet-among .planet-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
+  border: 2px solid var(--c);
+  border-radius: 50%;
+  transform: rotate(-20deg) scaleY(0.35);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.planet-pc .planet-dot::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(var(--c) 0% 25%, rgba(255, 255, 255, 0.18) 25% 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  pointer-events: none;
+}
+
+.orbit-hint {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13.5px;
+  margin: 0 0 40px;
+  transition: opacity 0.25s ease;
+}
+
+.planet-panel {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translate(-50%, 16px);
+  width: min(90vw, 420px);
+  background: rgba(18, 19, 28, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 22px 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+}
+
+.planet-panel.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.panel-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.panel-close:hover {
+  color: #fff;
+}
+
+.planet-panel h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0 0 8px;
+  color: #fff;
+  padding-right: 20px;
+}
+
+.planet-panel p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.panel-stat {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+}
+
+.panel-enter {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.panel-enter:hover {
+  border-color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit, .stars, .sun { animation: none; }
+}
+
 /* ---------- Fiches de rôle (Among Us : Concepts) ---------- */
 
 .roles {
