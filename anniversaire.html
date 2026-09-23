@@ -95,6 +95,48 @@
     color: #c2740b;
     font-weight: 600;
   }
+
+  /* ---------- Compte à rebours ---------- */
+
+  .countdown {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 0;
+    margin-top: 8px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .countdown-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown-label {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .countdown-done {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(22px, 4vw, 30px);
+    color: var(--accent);
+  }
 </style>
 </head>
 <body>
@@ -111,6 +153,27 @@
 <p>Quelques idées si vous cherchez quoi m'offrir. Le statut indique où en est chaque cadeau. Cliquez sur une carte pour voir le produit.</p>
 </div>
 </section>
+
+<div class="wrap">
+<div class="countdown" id="countdown">
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-days">—</span>
+    <span class="countdown-label">jours</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-hours">—</span>
+    <span class="countdown-label">heures</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-minutes">—</span>
+    <span class="countdown-label">minutes</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-seconds">—</span>
+    <span class="countdown-label">secondes</span>
+  </div>
+</div>
+</div>
 
 <div class="wrap">
 <div class="gift-grid">
@@ -172,6 +235,36 @@
 Nosterra — mis à jour au fil des projets.
 </div>
 </footer>
+
+<script>
+  // Compte à rebours jusqu'au 10 octobre 2026
+  const TARGET_DATE = new Date('2026-10-10T00:00:00');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = TARGET_DATE - now;
+    const container = document.getElementById('countdown');
+
+    if (diff <= 0) {
+      container.innerHTML = '<span class="countdown-done">C\'est aujourd\'hui 🎉</span>';
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('cd-days').textContent = days;
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
