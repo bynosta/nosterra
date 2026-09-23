@@ -8,63 +8,93 @@
 <style>
   .gift-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 1.1rem;
-    padding: 2rem 0 3rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+    margin-top: 16px;
   }
+
   .gift-card {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 150px;
-    padding: 1.2rem 1.2rem 1rem;
-    border-radius: 14px;
-    background: #14181c;
-    border: 1px solid #262b31;
+    padding: 24px 22px 20px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
     text-decoration: none;
-    color: inherit;
-    transition: transform .15s ease, border-color .15s ease;
+    color: var(--ink);
+    background: transparent;
+    transition: border-color 0.15s ease, background 0.15s ease;
   }
+
   .gift-card:hover {
-    transform: translateY(-3px);
-    border-color: #3a4148;
+    border-color: var(--accent);
+    background: var(--accent-soft);
   }
+
   .gift-num {
     position: absolute;
-    top: 1rem;
-    right: 1.1rem;
-    font-size: .75rem;
-    opacity: .35;
-    font-variant-numeric: tabular-nums;
+    top: 16px;
+    right: 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--line);
   }
+
   .gift-title {
-    font-size: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
+    font-size: 17px;
     line-height: 1.3;
-    margin: 0 1.6rem .4rem 0;
+    margin: 0 20px 8px 0;
   }
+
   .gift-domain {
-    font-size: .78rem;
-    opacity: .55;
-    margin: 0 0 1rem;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 20px;
     word-break: break-word;
   }
+
   .gift-status {
     align-self: flex-start;
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: .02em;
-    text-transform: uppercase;
-    padding: .3rem .65rem;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 11px;
     border-radius: 999px;
-    background: #2a2f35;
-    color: #cfd4d9;
+    border: 1px solid var(--line);
+    color: var(--muted);
   }
-  .gift-status.status-envie { background: rgba(148,163,184,.15); color: #94a3b8; }
-  .gift-status.status-reserve { background: rgba(59,130,246,.15); color: #60a5fa; }
-  .gift-status.status-offert { background: rgba(34,197,94,.15); color: #4ade80; }
-  .gift-status.status-economise { background: rgba(251,146,60,.15); color: #fb923c; }
+
+  .gift-status.status-envie {
+    border-color: var(--line);
+    color: var(--muted);
+  }
+
+  .gift-status.status-reserve {
+    border-color: transparent;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .gift-status.status-offert {
+    border-color: transparent;
+    background: #e8f5ec;
+    color: #2f9e5c;
+    font-weight: 600;
+  }
+
+  .gift-status.status-economise {
+    border-color: transparent;
+    background: #fbeee0;
+    color: #c2740b;
+    font-weight: 600;
+  }
 </style>
 </head>
 <body>
