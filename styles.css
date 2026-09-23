@@ -275,3 +275,23 @@ body {
   font-size: 13.5px;
   color: var(--muted);
 }
+
+/* ---------- Aperçu de build (Road to PC) ---------- */
+
+.build-preview {
+  margin-top: 40px;
+}
+
+.build-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.build-caption {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
