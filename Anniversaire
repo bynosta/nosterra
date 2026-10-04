@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anniversaire — Nosterra</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+    margin-top: 16px;
+  }
+
+  .gift-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+    padding: 24px 22px 20px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    background: transparent;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .gift-card:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .gift-num {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--line);
+  }
+
+  .gift-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.3;
+    margin: 0 20px 8px 0;
+  }
+
+  .gift-domain {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 20px;
+    word-break: break-word;
+  }
+
+  .gift-status {
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .gift-status.status-envie {
+    border-color: var(--line);
+    color: var(--muted);
+  }
+
+  .gift-status.status-reserve {
+    border-color: transparent;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .gift-status.status-offert {
+    border-color: transparent;
+    background: #e8f5ec;
+    color: #2f9e5c;
+    font-weight: 600;
+  }
+
+  .gift-status.status-economise {
+    border-color: transparent;
+    background: #fbeee0;
+    color: #c2740b;
+    font-weight: 600;
+  }
+
+  /* ---------- Compte à rebours ---------- */
+
+  .countdown {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 0;
+    margin-top: 8px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .countdown-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown-label {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .countdown-done {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(22px, 4vw, 30px);
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+<a href="index.html" class="wordmark">Nosterra</a>
+</div>
+</header>
+
+<section class="hero">
+<div class="wrap">
+<h1>Ma liste d'anniversaire.</h1>
+<p>Quelques idées si vous cherchez quoi m'offrir. Le statut indique où en est chaque cadeau. Cliquez sur une carte pour voir le produit.</p>
+</div>
+</section>
+
+<div class="wrap">
+<div class="countdown" id="countdown">
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-days">—</span>
+    <span class="countdown-label">jours</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-hours">—</span>
+    <span class="countdown-label">heures</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-minutes">—</span>
+    <span class="countdown-label">minutes</span>
+  </div>
+  <div class="countdown-unit">
+    <span class="countdown-value" id="cd-seconds">—</span>
+    <span class="countdown-label">secondes</span>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+<div class="gift-grid">
+
+<a class="gift-card" href="https://shop-eu.kurzgesagt.org/collections/deals/products/build-your-own-collectibles-bundle-1" target="_blank" rel="noopener">
+<span class="gift-num">01</span>
+<span class="gift-title">Pack d'objets (Kurzgesagt) - Avec Figurine 002: Cosmic Blast</span>
+<span class="gift-domain">shop-eu.kurzgesagt.org</span>
+<span class="gift-status status-envie">Envie</span>
+</a>
+
+<a class="gift-card" href="https://www.lego.com/fr-fr/product/autumn-cottage-garden-11372" target="_blank" rel="noopener">
+<span class="gift-num">02</span>
+<span class="gift-title">LEGO — Le jardin d'automne</span>
+<span class="gift-domain">lego.com</span>
+<span class="gift-status status-envie">Envie</span>
+</a>
+
+<a class="gift-card" href="https://www.avenuedelabrique.com/lego-architecture/21061-notre-dame-de-paris/p10148" target="_blank" rel="noopener">
+<span class="gift-num">02</span>
+<span class="gift-title">LEGO —  Notre-dame de Paris</span>
+<span class="gift-domain">avenuedelabrique.com</span>
+<span class="gift-status status-envie">Envie</span>
+</a>
+
+<a class="gift-card" href="https://www.amazon.fr/Phomemo-Imprimante-Thermique-Compatible-Smartphone/dp/B0C5XLH7SK?th=1" target="_blank" rel="noopener">
+<span class="gift-num">03</span>
+<span class="gift-title">Phomemo M02 Pro</span>
+<span class="gift-domain">amazon.fr</span>
+<span class="gift-status status-envie">Envie</span>
+</a>
+
+<a class="gift-card" href="https://direct.playstation.com/fr-be/buy-accessories/dualsense-wireless-controller-chroma-teal-for-ps5-pc-mac-mobile" target="_blank" rel="noopener">
+<span class="gift-num">04</span>
+<span class="gift-title">Manette DualSense® — Chroma Teal</span>
+<span class="gift-domain">direct.playstation.com</span>
+<span class="gift-status status-reserve">Réservé</span>
+</a>
+
+<a class="gift-card" href="https://store.playstation.com/fr-be/product/EP1004-PPSA01547_00-GTAVIULTIMATE001" target="_blank" rel="noopener">
+<span class="gift-num">05</span>
+<span class="gift-title">Grand Theft Auto VI — Édition Ultime</span>
+<span class="gift-domain">store.playstation.com</span>
+<span class="gift-status status-reserve">Réservé</span>
+</a>
+
+<a class="gift-card" href="https://displate.com/collectors/new_collector_1790185132268_c4efe6a2/sets/wishlist" target="_blank" rel="noopener">
+<span class="gift-num">06</span>
+<span class="gift-title">Displate</span>
+<span class="gift-domain">displate.com</span>
+<span class="gift-status status-envie">Envie</span>
+</a>
+
+<a class="gift-card" href="road-to-pc.html">
+<span class="gift-num">07</span>
+<span class="gift-title">PC gaming</span>
+<span class="gift-domain">Suivi sur Road to PC, vous pouvez m'aider si vous le souhaitez.</span>
+<span class="gift-status status-economise">Économise</span>
+</a>
+
+</div>
+</div>
+
+<footer class="site-footer">
+<div class="wrap">
+Nosterra — mis à jour au fil des projets.
+</div>
+</footer>
+
+<script>
+  // Compte à rebours jusqu'au 10 octobre 2026
+  const TARGET_DATE = new Date('2026-10-10T00:00:00');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = TARGET_DATE - now;
+    const container = document.getElementById('countdown');
+
+    if (diff <= 0) {
+      container.innerHTML = '<span class="countdown-done">C\'est aujourd\'hui 🎉</span>';
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('cd-days').textContent = days;
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
