@@ -3,101 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fêtes Festives — Nosterra</title>
+<title>Fêtes festives — Nosterra</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-  .gift-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    border-top: 1px solid var(--line);
-    padding-top: 32px;
-    margin-top: 16px;
+  :root {
+    --noel-red: #b8322a;
+    --noel-red-soft: #fbeceb;
+    --noel-green: #2f7d4f;
+    --noel-green-soft: #e8f5ec;
+    --noel-gold: #b7862b;
+    --noel-gold-soft: #fbf3df;
   }
 
-  .gift-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 150px;
-    padding: 24px 22px 20px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    text-decoration: none;
-    color: var(--ink);
-    background: transparent;
-    transition: border-color 0.15s ease, background 0.15s ease;
+  /* ---------- Neige ---------- */
+  #snow {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
   }
+  .site-header, .hero, .wrap, .site-footer { position: relative; z-index: 1; }
 
-  .gift-card:hover {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
-
-  .gift-num {
-    position: absolute;
-    top: 16px;
-    right: 18px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    color: var(--line);
-  }
-
-  .gift-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 1.3;
-    margin: 0 20px 8px 0;
-  }
-
-  .gift-domain {
-    font-size: 13px;
-    color: var(--muted);
-    margin: 0 0 20px;
-    word-break: break-word;
-  }
-
-  .gift-status {
-    align-self: flex-start;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 11px;
+  /* ---------- Hero festif ---------- */
+  .hero h1 { max-width: 18ch; }
+  .hero h1::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin-top: 18px;
     border-radius: 999px;
-    border: 1px solid var(--line);
-    color: var(--muted);
-  }
-
-  .gift-status.status-envie {
-    border-color: var(--line);
-    color: var(--muted);
-  }
-
-  .gift-status.status-reserve {
-    border-color: transparent;
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .gift-status.status-offert {
-    border-color: transparent;
-    background: #e8f5ec;
-    color: #2f9e5c;
-    font-weight: 600;
-  }
-
-  .gift-status.status-economise {
-    border-color: transparent;
-    background: #fbeee0;
-    color: #c2740b;
-    font-weight: 600;
+    background: repeating-linear-gradient(90deg,
+      var(--noel-red) 0 16px, var(--noel-green) 16px 32px);
   }
 
   /* ---------- Compte à rebours ---------- */
-
+  .countdown-label-top {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 14px;
+    letter-spacing: 0.02em;
+  }
   .countdown {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -107,22 +55,15 @@
     gap: 32px;
     flex-wrap: wrap;
   }
-
-  .countdown-unit {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
+  .countdown-unit { display: flex; flex-direction: column; align-items: flex-start; }
   .countdown-value {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: clamp(28px, 5vw, 40px);
     line-height: 1;
-    color: var(--ink);
+    color: var(--noel-red);
     font-variant-numeric: tabular-nums;
   }
-
   .countdown-label {
     margin-top: 6px;
     font-size: 12px;
@@ -130,16 +71,141 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
-
   .countdown-done {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: clamp(22px, 4vw, 30px);
-    color: var(--accent);
+    color: var(--noel-green);
+  }
+
+  /* ---------- Grille cadeaux ---------- */
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding-top: 32px;
+    margin-top: 0;
+  }
+  .gift-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+    padding: 24px 22px 20px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--noel-red);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    background: rgba(255,255,255,0.7);
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+  .gift-card:nth-child(even) { border-top-color: var(--noel-green); }
+  .gift-card:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    border-color: var(--noel-red);
+  }
+  .gift-card:nth-child(even):hover { border-color: var(--noel-green); }
+  .gift-num {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--line);
+  }
+  .gift-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.3;
+    margin: 0 20px 8px 0;
+  }
+  .gift-domain {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 20px;
+    word-break: break-word;
+  }
+  .gift-status {
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .gift-status.status-reserve { border-color: transparent; background: var(--noel-red-soft); color: var(--noel-red); font-weight: 600; }
+  .gift-status.status-offert { border-color: transparent; background: var(--noel-green-soft); color: var(--noel-green); font-weight: 600; }
+  .gift-status.status-economise { border-color: transparent; background: var(--noel-gold-soft); color: var(--noel-gold); font-weight: 600; }
+
+  /* ---------- Carrousel sponsors ---------- */
+  .sponsors {
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+  }
+  .sponsors h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+  .carousel {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .carousel-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: scroll-sponsors 32s linear infinite;
+  }
+  .carousel:hover .carousel-track { animation-play-state: paused; }
+  @keyframes scroll-sponsors {
+    to { transform: translateX(calc(-50% - 8px)); }
+  }
+  .sponsor {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 84px;
+    padding: 14px 18px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .sponsor:hover { border-color: var(--noel-red); transform: translateY(-2px); }
+  .sponsor img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition: filter 0.15s ease, opacity 0.15s ease;
+  }
+  .sponsor:hover img { filter: none; opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel { overflow-x: auto; }
+    .carousel-track { animation: none; }
   }
 </style>
 </head>
 <body>
+
+<canvas id="snow" aria-hidden="true"></canvas>
 
 <header class="site-header">
 <div class="wrap">
@@ -149,43 +215,38 @@
 
 <section class="hero">
 <div class="wrap">
-<h1>???</h1>
+<h1>Fêtes festives.</h1>
 <p>Quelques idées si vous cherchez quoi m'offrir. Le statut indique où en est chaque cadeau. Cliquez sur une carte pour voir le produit.</p>
 </div>
 </section>
 
 <div class="wrap">
 <div class="countdown" id="countdown">
-  <div class="countdown-unit">
-    <span class="countdown-value" id="cd-days">—</span>
-    <span class="countdown-label">jours</span>
-  </div>
-  <div class="countdown-unit">
-    <span class="countdown-value" id="cd-hours">—</span>
-    <span class="countdown-label">heures</span>
-  </div>
-  <div class="countdown-unit">
-    <span class="countdown-value" id="cd-minutes">—</span>
-    <span class="countdown-label">minutes</span>
-  </div>
-  <div class="countdown-unit">
-    <span class="countdown-value" id="cd-seconds">—</span>
-    <span class="countdown-label">secondes</span>
-  </div>
+  <div class="countdown-unit"><span class="countdown-value" id="cd-days">—</span><span class="countdown-label">jours</span></div>
+  <div class="countdown-unit"><span class="countdown-value" id="cd-hours">—</span><span class="countdown-label">heures</span></div>
+  <div class="countdown-unit"><span class="countdown-value" id="cd-minutes">—</span><span class="countdown-label">minutes</span></div>
+  <div class="countdown-unit"><span class="countdown-value" id="cd-seconds">—</span><span class="countdown-label">secondes</span></div>
 </div>
 </div>
 
 <div class="wrap">
 <div class="gift-grid">
 
-<a class="gift-card" href="https://www.combiendejoursavantnoel.com" target="_blank" rel="noopener">
+<a class="gift-card" href="https://shop-eu.kurzgesagt.org/collections/deals/products/build-your-own-collectibles-bundle-1" target="_blank" rel="noopener">
 <span class="gift-num">01</span>
 <span class="gift-title">Bientôt...</span>
-<span class="gift-domain">Noël</span>
+<span class="gift-domain">https://www.combiendejoursavantnoel.com</span>
 <span class="gift-status status-envie">???</span>
 </a>
 
 </div>
+
+<section class="sponsors">
+  <h2>Nos partenaires</h2>
+  <div class="carousel">
+    <div class="carousel-track" id="sponsor-track"></div>
+  </div>
+</section>
 </div>
 
 <footer class="site-footer">
@@ -195,33 +256,106 @@ Nosterra — mis à jour au fil des projets.
 </footer>
 
 <script>
-  // Compte à rebours jusqu'au 10 octobre 2026
+  // =============================================================
+  // À MODIFIER : ta date de compte à rebours
+  // =============================================================
   const TARGET_DATE = new Date('2026-12-25T00:00:00');
 
-  function updateCountdown() {
-    const now = new Date();
-    const diff = TARGET_DATE - now;
-    const container = document.getElementById('countdown');
+  // =============================================================
+  // À MODIFIER : tes sponsors
+  //   name : nom du sponsor
+  //   img  : chemin de l'image (ex: 'images/sponsor1.png'), vide = image provisoire
+  //   url  : site ouvert au clic
+  // =============================================================
+  const SPONSORS = [
+    { name: 'Sponsor 1', img: '', url: 'https://example.com' },
+    { name: 'Sponsor 2', img: '', url: 'https://example.com' },
+    { name: 'Sponsor 3', img: '', url: 'https://example.com' },
+    { name: 'Sponsor 4', img: '', url: 'https://example.com' }
+  ];
 
+  // ---------- Compte à rebours ----------
+  function updateCountdown() {
+    const diff = TARGET_DATE - new Date();
+    const container = document.getElementById('countdown');
     if (diff <= 0) {
-      container.innerHTML = '<span class="countdown-done">Joyeux Noël !</span>';
+      container.innerHTML = '<span class="countdown-done">Joyeuses fêtes ! 🎄</span>';
       clearInterval(timer);
       return;
     }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    document.getElementById('cd-days').textContent = days;
-    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+    document.getElementById('cd-days').textContent = Math.floor(diff / 86400000);
+    document.getElementById('cd-hours').textContent = String(Math.floor(diff / 3600000) % 24).padStart(2, '0');
+    document.getElementById('cd-minutes').textContent = String(Math.floor(diff / 60000) % 60).padStart(2, '0');
+    document.getElementById('cd-seconds').textContent = String(Math.floor(diff / 1000) % 60).padStart(2, '0');
   }
-
   updateCountdown();
   const timer = setInterval(updateCountdown, 1000);
+
+  // ---------- Carrousel sponsors ----------
+  function placeholder(name) {
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="140" height="48">' +
+      '<text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" ' +
+      'font-family="sans-serif" font-size="15" font-weight="600" fill="#6d7178">' + name + '</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  (function buildCarousel() {
+    const track = document.getElementById('sponsor-track');
+    const reps = Math.max(1, Math.ceil(8 / SPONSORS.length));
+    let list = [];
+    for (let i = 0; i < reps; i++) list = list.concat(SPONSORS);
+    const all = list.concat(list); // doublé pour une boucle sans coupure
+    all.forEach(s => {
+      const a = document.createElement('a');
+      a.className = 'sponsor';
+      a.href = s.url;
+      a.target = '_blank';
+      a.rel = 'noopener sponsored';
+      a.setAttribute('aria-label', s.name);
+      const img = document.createElement('img');
+      img.src = s.img || placeholder(s.name);
+      img.alt = s.name;
+      img.loading = 'lazy';
+      a.appendChild(img);
+      track.appendChild(a);
+    });
+  })();
+
+  // ---------- Neige discrète ----------
+  (function snow() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let w, h, flakes = [];
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      const count = Math.min(70, Math.floor(w / 18));
+      flakes = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 2 + 1,
+        v: Math.random() * 0.6 + 0.3,
+        d: Math.random() * Math.PI * 2
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(130,160,200,0.45)';
+      flakes.forEach(f => {
+        f.y += f.v;
+        f.d += 0.01;
+        f.x += Math.sin(f.d) * 0.4;
+        if (f.y > h + 5) { f.y = -5; f.x = Math.random() * w; }
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  })();
 </script>
 
 </body>
